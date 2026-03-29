@@ -588,10 +588,15 @@ class ReadingBoardHandler(BaseHTTPRequestHandler):
         )
 
     def serve_static(self, path):
-        if path == "/":
-            path = "/index.html"
-        file_path = (STATIC_DIR / path.lstrip("/")).resolve()
-        if not str(file_path).startswith(str(STATIC_DIR.resolve())) or not file_path.exists() or not file_path.is_file():
+        static_root = STATIC_DIR.resolve()
+        if path in ("", "/"):
+            file_path = static_root / "index.html"
+        else:
+            file_path = (static_root / path.lstrip("/")).resolve()
+            if not str(file_path).startswith(str(static_root)) or not file_path.exists() or not file_path.is_file():
+                # Fallback for hosts or browsers that request rewritten paths.
+                file_path = static_root / "index.html"
+        if not file_path.exists() or not file_path.is_file():
             self.send_response(404)
             self.end_headers()
             self.wfile.write(b"Not found")
