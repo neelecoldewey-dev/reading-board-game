@@ -1,0 +1,185 @@
+{
+  "users": {
+    "cabb58073c3b48d7a617eeae4c96cfc4": {
+      "id": "cabb58073c3b48d7a617eeae4c96cfc4",
+      "username": "mialiest",
+      "displayName": "Mia",
+      "passwordHash": "937e8d5fbb48bd4949536cd65b8d35c426b80d2f830c5c308e2cdec422ae2244",
+      "createdAt": 1774718654,
+      "position": 4,
+      "xp": 40,
+      "pagesRead": 25,
+      "cardsCompleted": 1,
+      "activeRoomId": "bdb58b71d7fe40c3aff87f296062b235",
+      "currentCard": null,
+      "lastActionAt": 1774718697
+    },
+    "f131fd53fe4d48f99818b1abb303a4d6": {
+      "id": "f131fd53fe4d48f99818b1abb303a4d6",
+      "username": "neele",
+      "displayName": "neele",
+      "passwordHash": "764fa366e0375f70222d3af2634007d580541fc775f728dc9fea635cac77251e",
+      "createdAt": 1774719031,
+      "position": 20,
+      "xp": 210,
+      "pagesRead": 107,
+      "cardsCompleted": 6,
+      "activeRoomId": "e7357ee23ddd46c1b32065b80065f76e",
+      "currentCard": {
+        "id": "01cb07d085f2444cb06e66d3c82fbd49",
+        "title": "Mini-Binge",
+        "description": "Lies zwei Szenen hintereinander ohne auf die Uhr zu schauen.",
+        "pages": 11,
+        "xpReward": 20,
+        "stepsReward": 2,
+        "tag": "Flow",
+        "createdAt": 1774722543
+      },
+      "lastActionAt": 1774722543
+    }
+  },
+  "rooms": {
+    "bdb58b71d7fe40c3aff87f296062b235": {
+      "id": "bdb58b71d7fe40c3aff87f296062b235",
+      "name": "Mias Lesebande",
+      "code": "9D813B",
+      "ownerId": "cabb58073c3b48d7a617eeae4c96cfc4",
+      "memberIds": [
+        "cabb58073c3b48d7a617eeae4c96cfc4"
+      ],
+      "createdAt": 1774718654
+    },
+    "e7357ee23ddd46c1b32065b80065f76e": {
+      "id": "e7357ee23ddd46c1b32065b80065f76e",
+      "name": "neeles Lesebande",
+      "code": "37D5D4",
+      "ownerId": "f131fd53fe4d48f99818b1abb303a4d6",
+      "memberIds": [
+        "f131fd53fe4d48f99818b1abb303a4d6"
+      ],
+      "createdAt": 1774719031
+    }
+  },
+  "feed": [
+    {
+      "id": "22bece18b73e4705bdfca804139e6b30",
+      "roomId": "bdb58b71d7fe40c3aff87f296062b235",
+      "message": "Mia hat die Lesebande betreten.",
+      "createdAt": 1774718654
+    },
+    {
+      "id": "3766bfaf1a3549baab82d718a8437ad4",
+      "roomId": "bdb58b71d7fe40c3aff87f296062b235",
+      "message": "Mia hat die Karte 'Plot-Turbo' gezogen.",
+      "createdAt": 1774718694
+    },
+    {
+      "id": "9a4cc79bd1e545eaa6aa012233a8eb7d",
+      "roomId": "bdb58b71d7fe40c3aff87f296062b235",
+      "message": "Mia hat 'Plot-Turbo' abgeschlossen und ist auf Feld 4 gezogen.",
+      "createdAt": 1774718697
+    },
+    {
+      "id": "66412af89bb540b0badaa65ac4349a3e",
+      "roomId": "e7357ee23ddd46c1b32065b80065f76e",
+      "message": "neele hat die Lesebande betreten.",
+      "createdAt": 1774719031
+    },
+    {
+      "id": "5443674023ff4612b82605de1b0c0d5e",
+      "roomId": "e7357ee23ddd46c1b32065b80065f76e",
+      "message": "neele hat die Karte 'Cliffhanger-Modus' gezogen.",
+      "createdAt": 1774719294
+    },
+    {
+      "id": "45de0b3962654e84bc9068905484bb4a",
+      "roomId": "e7357ee23ddd46c1b32065b80065f76e",
+      "message": "neele hat 'Cliffhanger-Modus' abgeschlossen und ist auf Feld 2 gezogen.",
+      "createdAt": 1774719922
+    },
+    {
+      "id": "cf3e1c6a59974f5aac618e1cda7aedcd",
+      "roomId": "e7357ee23ddd46c1b32065b80065f76e",
+      "message": "neele landet auf social und erlebt: Buddy-Blick.",
+      "createdAt": 1774719922
+    },
+    {
+      "id": "47102410005944fca52039114756bcf3",
+      "roomId": "e7357ee23ddd46c1b32065b80065f76e",
+      "message": "neele hat die Karte 'Kapitel-Jaeger' gezogen.",
+      "createdAt": 1774719942
+    },
+    {
+      "id": "d99c5b0048ff4e05986472067f74550f",
+      "roomId": "e7357ee23ddd46c1b32065b80065f76e",
+      "message": "neele hat 'Kapitel-Jaeger' abgeschlossen und ist auf Feld 5 gezogen.",
+      "createdAt": 1774720007
+    },
+    {
+      "id": "4154eb5148ba46d89ff950732fd2122d",
+      "roomId": "e7357ee23ddd46c1b32065b80065f76e",
+      "message": "neele hat die Karte 'Charakterblick' gezogen.",
+      "createdAt": 1774720011
+    },
+    {
+      "id": "b4892ec3ce7e4858847b55c4e79c3028",
+      "roomId": "e7357ee23ddd46c1b32065b80065f76e",
+      "message": "neele hat 'Charakterblick' abgeschlossen und ist auf Feld 7 gezogen.",
+      "createdAt": 1774720197
+    },
+    {
+      "id": "f9482c57acf5451b9a95ce46a4772e57",
+      "roomId": "e7357ee23ddd46c1b32065b80065f76e",
+      "message": "neele landet auf boost und erlebt: Leselaune.",
+      "createdAt": 1774720197
+    },
+    {
+      "id": "25232f74fcec411592a4eea0bdde5507",
+      "roomId": "e7357ee23ddd46c1b32065b80065f76e",
+      "message": "neele hat die Karte 'Plot-Turbo' gezogen.",
+      "createdAt": 1774720214
+    },
+    {
+      "id": "ac8ec605723147368ec1935032b5ee99",
+      "roomId": "e7357ee23ddd46c1b32065b80065f76e",
+      "message": "neele hat 'Plot-Turbo' abgeschlossen und ist auf Feld 13 gezogen.",
+      "createdAt": 1774721045
+    },
+    {
+      "id": "e3c28a6ff3084a76a9cdfc3246687457",
+      "roomId": "e7357ee23ddd46c1b32065b80065f76e",
+      "message": "neele hat die Karte 'Mondschein-Runde' gezogen.",
+      "createdAt": 1774721049
+    },
+    {
+      "id": "6b4cba52459e43508c4db9e1e98caf2b",
+      "roomId": "e7357ee23ddd46c1b32065b80065f76e",
+      "message": "neele hat 'Mondschein-Runde' abgeschlossen und ist auf Feld 17 gezogen.",
+      "createdAt": 1774721566
+    },
+    {
+      "id": "62de8a3d5f0d49ec93d0748b6eece920",
+      "roomId": "e7357ee23ddd46c1b32065b80065f76e",
+      "message": "neele hat die Karte 'Mondschein-Runde' gezogen.",
+      "createdAt": 1774721572
+    },
+    {
+      "id": "347700f878234979bd406182a4c3a8af",
+      "roomId": "e7357ee23ddd46c1b32065b80065f76e",
+      "message": "neele hat 'Mondschein-Runde' abgeschlossen und ist auf Feld 19 gezogen.",
+      "createdAt": 1774722523
+    },
+    {
+      "id": "853f550454db42da89b35bc6352628a6",
+      "roomId": "e7357ee23ddd46c1b32065b80065f76e",
+      "message": "neele landet auf social und erlebt: Buddy-Blick.",
+      "createdAt": 1774722523
+    },
+    {
+      "id": "8d7f0150da99458c9196ebf56cd3116d",
+      "roomId": "e7357ee23ddd46c1b32065b80065f76e",
+      "message": "neele hat die Karte 'Mini-Binge' gezogen.",
+      "createdAt": 1774722543
+    }
+  ]
+}
