@@ -14,7 +14,7 @@ import uuid
 
 BASE_DIR = Path(__file__).resolve().parent
 STATIC_DIR = BASE_DIR / "static"
-DATA_DIR = BASE_DIR / "data"
+DATA_DIR = Path(os.environ.get("DATA_DIR", str(BASE_DIR / "data"))).resolve()
 STORE_PATH = DATA_DIR / "store.json"
 
 DATA_LOCK = threading.Lock()
@@ -33,7 +33,8 @@ CARD_DECKS = [
     {
         "title": "Seiten-Sprint",
         "description": "Lies 10 Seiten am Stueck.",
-        "pages": 10,
+        "goalType": "fixed_pages",
+        "goalValue": 10,
         "xp": 20,
         "steps": (1, 3),
         "tag": "Tempo",
@@ -41,7 +42,8 @@ CARD_DECKS = [
     {
         "title": "Kapitel-Jaeger",
         "description": "Lies bis zum naechsten Kapitelende.",
-        "pages": 16,
+        "goalType": "manual_pages",
+        "goalValue": None,
         "xp": 30,
         "steps": (2, 4),
         "tag": "Kapitel",
@@ -49,7 +51,8 @@ CARD_DECKS = [
     {
         "title": "Drei-Kapitel-Quest",
         "description": "Lies 3 Kapitel, egal wie lang sie sind.",
-        "pages": 30,
+        "goalType": "manual_pages",
+        "goalValue": None,
         "xp": 55,
         "steps": (3, 6),
         "tag": "Ausdauer",
@@ -57,7 +60,8 @@ CARD_DECKS = [
     {
         "title": "Leise-Lesung",
         "description": "Lies 15 Minuten ohne Ablenkung.",
-        "pages": 8,
+        "goalType": "manual_pages",
+        "goalValue": None,
         "xp": 18,
         "steps": (1, 2),
         "tag": "Fokus",
@@ -65,7 +69,8 @@ CARD_DECKS = [
     {
         "title": "Cliffhanger-Modus",
         "description": "Lies weiter, bis etwas Ueberraschendes passiert.",
-        "pages": 14,
+        "goalType": "manual_pages",
+        "goalValue": None,
         "xp": 24,
         "steps": (2, 3),
         "tag": "Story",
@@ -73,7 +78,8 @@ CARD_DECKS = [
     {
         "title": "Charakterblick",
         "description": "Lies ein Kapitel und merke dir deinen Lieblingscharakter-Moment.",
-        "pages": 12,
+        "goalType": "manual_pages",
+        "goalValue": None,
         "xp": 22,
         "steps": (1, 3),
         "tag": "Reflexion",
@@ -81,7 +87,8 @@ CARD_DECKS = [
     {
         "title": "Mondschein-Runde",
         "description": "Lies noch 20 Seiten vor dem Schlafen.",
-        "pages": 20,
+        "goalType": "fixed_pages",
+        "goalValue": 20,
         "xp": 34,
         "steps": (2, 4),
         "tag": "Abend",
@@ -89,7 +96,8 @@ CARD_DECKS = [
     {
         "title": "Mini-Binge",
         "description": "Lies zwei Szenen hintereinander ohne auf die Uhr zu schauen.",
-        "pages": 11,
+        "goalType": "manual_pages",
+        "goalValue": None,
         "xp": 20,
         "steps": (1, 3),
         "tag": "Flow",
@@ -97,7 +105,8 @@ CARD_DECKS = [
     {
         "title": "Plot-Turbo",
         "description": "Lies 25 Seiten und notiere dir innerlich die groesste Wendung.",
-        "pages": 25,
+        "goalType": "fixed_pages",
+        "goalValue": 25,
         "xp": 40,
         "steps": (3, 5),
         "tag": "Plot",
@@ -105,7 +114,8 @@ CARD_DECKS = [
     {
         "title": "Genre-Sprung",
         "description": "Lies heute etwas, das sich komplett anders anfuehlt als gestern.",
-        "pages": 9,
+        "goalType": "manual_pages",
+        "goalValue": None,
         "xp": 22,
         "steps": (1, 2),
         "tag": "Abwechslung",
@@ -152,6 +162,14 @@ def load_store():
 def save_store(data):
     with STORE_PATH.open("w", encoding="utf-8") as handle:
         json.dump(data, handle, indent=2)
+
+
+def parse_positive_int(value):
+    try:
+        parsed = int(value)
+    except (TypeError, ValueError):
+        return None
+    return parsed if parsed >= 0 else None
 
 
 def hash_password(password):
@@ -282,7 +300,8 @@ def card_for_user(user, room_code):
         "id": uuid.uuid4().hex,
         "title": template["title"],
         "description": template["description"],
-        "pages": template["pages"],
+        "goalType": template["goalType"],
+        "goalValue": template["goalValue"],
         "xpReward": template["xp"],
         "stepsReward": steps,
         "tag": template["tag"],
@@ -415,7 +434,7 @@ class ReadingBoardHandler(BaseHTTPRequestHandler):
                 self.handle_draw_card(store)
                 return
             if path == "/api/cards/complete" and method == "POST":
-                self.handle_complete_card(store)
+                self.handle_complete_card(store, payload)
                 return
             self.send_error_json(404, "Route nicht gefunden.")
 
@@ -478,13 +497,23 @@ class ReadingBoardHandler(BaseHTTPRequestHandler):
     def handle_bootstrap(self, store):
         user = self.get_session_user(store)
         if not user:
-            self.send_json(200, {"authenticated": False})
+            self.send_json(
+                200,
+                {
+                    "authenticated": False,
+                    "storageHint": "Nutze fuer Online-Deploys einen persistenten DATA_DIR, sonst koennen Accounts nach Neustarts verloren gehen.",
+                },
+            )
             return
 
         room = ensure_user_room(store, user)
         if room:
             save_store(store)
-        payload = {"authenticated": True, "user": public_user(user)}
+        payload = {
+            "authenticated": True,
+            "user": public_user(user),
+            "storageHint": "Fuer stabile Online-Accounts braucht dein Hosting einen persistenten DATA_DIR.",
+        }
         if room:
             players = [public_user(store["users"][member_id]) for member_id in room["memberIds"] if member_id in store["users"]]
             center = max([player["position"] for player in players] + [user["position"]])
@@ -547,7 +576,7 @@ class ReadingBoardHandler(BaseHTTPRequestHandler):
         save_store(store)
         self.send_json(200, {"ok": True, "card": card})
 
-    def handle_complete_card(self, store):
+    def handle_complete_card(self, store, payload):
         user = self.require_user(store)
         if not user:
             return
@@ -560,7 +589,14 @@ class ReadingBoardHandler(BaseHTTPRequestHandler):
             self.send_error_json(400, "Du hast keine offene Karte.")
             return
 
-        user["pagesRead"] += card["pages"]
+        actual_pages = parse_positive_int(payload.get("actualPages"))
+        if card["goalType"] == "fixed_pages":
+            actual_pages = card["goalValue"]
+        elif actual_pages is None:
+            self.send_error_json(400, "Bitte gib ein, wie viele Seiten du wirklich gelesen hast.")
+            return
+
+        user["pagesRead"] += actual_pages
         user["xp"] += card["xpReward"]
         user["cardsCompleted"] += 1
         user["position"] += card["stepsReward"]
@@ -570,7 +606,7 @@ class ReadingBoardHandler(BaseHTTPRequestHandler):
         add_feed_event(
             store,
             room["id"],
-            f"{user['displayName']} hat '{card['title']}' abgeschlossen und ist auf Feld {user['position']} gezogen.",
+            f"{user['displayName']} hat '{card['title']}' abgeschlossen, {actual_pages} Seiten eingetragen und ist auf Feld {user['position']} gezogen.",
         )
 
         effect = resolve_space_effect(room, user)
@@ -582,6 +618,7 @@ class ReadingBoardHandler(BaseHTTPRequestHandler):
             {
                 "ok": True,
                 "completedCard": card,
+                "actualPages": actual_pages,
                 "spaceEffect": effect,
                 "user": public_user(user),
             },

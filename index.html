@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reading Board</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="hero">
+        <div>
+          <p class="eyebrow">Unendliches Lesebrett</p>
+          <h1>Reading Board</h1>
+          <p class="hero-copy">
+            Ziehe Lesekarten, steige auf, rutsche ueber ein endloses Brett und verfolge live,
+            wie weit deine Lesebande schon gekommen ist.
+          </p>
+        </div>
+        <div class="hero-badge" id="heroBadge">Bereit fuer die naechste Karte</div>
+      </header>
+
+      <main class="layout">
+        <section class="panel auth-panel" id="authPanel">
+          <div class="tabs">
+            <button class="tab active" data-tab="register">Konto erstellen</button>
+            <button class="tab" data-tab="login">Einloggen</button>
+          </div>
+
+          <form id="registerForm" class="stack">
+            <label>
+              Anzeigename
+              <input name="displayName" placeholder="z. B. Mia" required />
+            </label>
+            <label>
+              Username
+              <input name="username" placeholder="mialiest" required minlength="3" />
+            </label>
+            <label>
+              Passwort
+              <input name="password" type="password" required minlength="4" />
+            </label>
+            <button type="submit">Loslegen</button>
+          </form>
+
+          <form id="loginForm" class="stack hidden">
+            <label>
+              Username
+              <input name="username" placeholder="mialiest" required />
+            </label>
+            <label>
+              Passwort
+              <input name="password" type="password" required />
+            </label>
+            <button type="submit">Einloggen</button>
+          </form>
+        </section>
+
+        <section class="game hidden" id="gamePanel">
+          <div class="grid">
+            <section class="panel profile-panel">
+              <div class="panel-header">
+                <h2>Dein Profil</h2>
+                <button class="ghost" id="logoutButton">Logout</button>
+              </div>
+              <div id="profileCard"></div>
+            </section>
+
+            <section class="panel room-panel">
+              <div class="panel-header">
+                <h2>Lesebande</h2>
+                <span class="hint">Teilen und gemeinsam lesen</span>
+              </div>
+              <div class="stack room-actions">
+                <form id="createRoomForm" class="inline-form">
+                  <input name="name" placeholder="Neuen Raum benennen" />
+                  <button type="submit">Raum neu</button>
+                </form>
+                <form id="joinRoomForm" class="inline-form">
+                  <input name="code" placeholder="Code eingeben" maxlength="6" />
+                  <button type="submit">Beitreten</button>
+                </form>
+              </div>
+              <div id="roomCard"></div>
+            </section>
+
+            <section class="panel board-panel">
+              <div class="panel-header">
+                <h2>Unendliches Brett</h2>
+                <span class="hint">Die meisten Felder schicken dich zu neuen Karten</span>
+              </div>
+              <div id="boardStrip" class="board-strip"></div>
+            </section>
+
+            <section class="panel card-panel">
+              <div class="panel-header">
+                <h2>Aktive Karte</h2>
+                <span class="hint">Ziehe neue Aufgaben und sammle XP</span>
+              </div>
+              <div id="activeCard"></div>
+              <div id="pageInputWrap" class="page-input-wrap hidden">
+                <label>
+                  Wie viele Seiten waren es wirklich?
+                  <input id="actualPagesInput" type="number" min="0" inputmode="numeric" placeholder="z. B. 17" />
+                </label>
+              </div>
+              <div class="card-buttons">
+                <button id="drawButton">Karte ziehen</button>
+                <button class="secondary" id="completeButton">Karte abgeschlossen</button>
+              </div>
+              <div id="spaceEffect"></div>
+            </section>
+
+            <section class="panel players-panel">
+              <div class="panel-header">
+                <h2>Gemeinsamer Fortschritt</h2>
+                <span class="hint">Wer ist gerade vorne?</span>
+              </div>
+              <div id="playersList" class="players-list"></div>
+            </section>
+
+            <section class="panel feed-panel">
+              <div class="panel-header">
+                <h2>Raum-Feed</h2>
+                <span class="hint">Alles, was zuletzt passiert ist</span>
+              </div>
+              <div id="feedList" class="feed-list"></div>
+            </section>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <div id="toast" class="toast hidden"></div>
+    <script src="/app.js"></script>
+  </body>
+  </html>
